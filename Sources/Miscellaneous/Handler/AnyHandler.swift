@@ -1,18 +1,22 @@
 // MARK: - AnyHandler
 
 /// An implementation of `Handler` which type-erases an instance of arbitrary `Handler` implementation.
+@_fixed_layout
 public struct AnyHandler<Handled> {
-	private init(core: AnyHandlerCore<Handled>) {
+	@inlinable
+	internal init(core: AnyHandlerCore<Handled>) {
 		self.core = core
 	}
 
-	private var core: AnyHandlerCore<Handled>
+	@usableFromInline
+	internal var core: AnyHandlerCore<Handled>
 }
 
 public extension AnyHandler {
 	/// Wrap `base` into `AnyHandler`.
 	///
 	/// - parameter base: The instance of `Handler` to be wrapped.
+	@inlinable
 	init<Base>(_ base: Base) where Base: Handler, Base.Handled == Handled {
 		self.init(core: HandlerCore(base))
 	}
@@ -25,6 +29,7 @@ extension AnyHandler: Handler { }
 public extension AnyHandler {
 	/* associatedtype Handled */
 
+	@inlinable
 	mutating func handle(_ handled: Handled) {
 		self.mutating()
 		self.core.handle(handled)
@@ -33,7 +38,8 @@ public extension AnyHandler {
 
 // MARK: - AnyHandler (Details)
 
-fileprivate extension AnyHandler {
+internal extension AnyHandler {
+	@inlinable
 	mutating func mutating() {
 		if isKnownUniquelyReferenced(&self.core) {
 			self.core = self.core.copy()
@@ -43,30 +49,40 @@ fileprivate extension AnyHandler {
 
 // MARK: - Any  Core
 
-fileprivate class AnyHandlerCore<Handled> {
-	fileprivate func copy() -> AnyHandlerCore<Handled> {
+@_fixed_layout
+@usableFromInline
+internal class AnyHandlerCore<Handled> {
+	@inlinable
+	internal func copy() -> AnyHandlerCore<Handled> {
 		fatalError()
 	}
 
-	fileprivate func handle(_ handled: Handled) {
+	@inlinable
+	internal func handle(_ handled: Handled) {
 		fatalError()
 	}
 }
 
 // MARK: - HandlerCore
 
-fileprivate final class HandlerCore<Base>: AnyHandlerCore<Base.Handled> where Base: Handler {
-	fileprivate init(_ base: Base) {
+@_fixed_layout
+@usableFromInline
+internal final class HandlerCore<Base>: AnyHandlerCore<Base.Handled> where Base: Handler {
+	@inlinable
+	internal init(_ base: Base) {
 		self.base = base
 	}
 
-	private var base: Base
+	@usableFromInline
+	internal var base: Base
 
-	fileprivate override func copy() -> AnyHandlerCore<Base.Handled> {
+	@inlinable
+	internal override func copy() -> AnyHandlerCore<Base.Handled> {
 		return HandlerCore(self.base)
 	}
 
-	fileprivate override func handle(_ handled: Base.Handled) {
+	@inlinable
+	internal override func handle(_ handled: Base.Handled) {
 		self.base.handle(handled)
 	}
 }
