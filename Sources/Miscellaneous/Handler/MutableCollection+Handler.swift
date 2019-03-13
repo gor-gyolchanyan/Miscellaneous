@@ -3,6 +3,7 @@
 public extension MutableCollection where Element: Handler {
 	typealias Handled = Element.Handled
 
+	@inlinable
 	mutating func handle(_ handled: Handled) {
 		for index in self.indices {
 			self[index].handle(handled)
