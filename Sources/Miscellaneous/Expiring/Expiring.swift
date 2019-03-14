@@ -8,3 +8,11 @@ public protocol Expiring {
 	/// The thing that is stored.
 	var unexpired: Unexpired? { get set }
 }
+
+public extension Expiring where Self: ExpressibleByNilLiteral {
+	@inlinable
+	init(_ unexpired: Unexpired? = nil) {
+		self.init(nilLiteral: ())
+		self.unexpired = unexpired
+	}
+}
