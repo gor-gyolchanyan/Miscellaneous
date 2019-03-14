@@ -1,18 +1,22 @@
 // MARK: - AnySupplier
 
 /// An implementation of `Supplier` which type-erases an instance of arbitrary `Supplier` implementation.
+@_fixed_layout
 public struct AnySupplier<Supplied> where Supplied: Handler {
-	private init(core: AnySupplierCore<Supplied>) {
+	@inlinable
+	internal init(core: AnySupplierCore<Supplied>) {
 		self.core = core
 	}
 
-	private var core: AnySupplierCore<Supplied>
+	@usableFromInline
+	internal var core: AnySupplierCore<Supplied>
 }
 
 public extension AnySupplier {
 	/// Wrap `base` into `AnySupplier`.
 	///
 	/// - parameter base: The instance of `Supplier` to be wrapped.
+	@inlinable
 	init<Base>(_ base: Base) where Base: Supplier, Base.Supplied == Supplied {
 		self.init(core: SupplierCore(base))
 	}
@@ -26,10 +30,12 @@ public extension AnySupplier {
 	/* associatedtype Supplied where Supplied: Handler */
 
 	var supplied: Supplied {
+		@inlinable
 		get {
 			return self.core.supplied
 		}
 
+		@inlinable
 		set {
 			self.mutating()
 			self.core.supplied = newValue
@@ -39,7 +45,8 @@ public extension AnySupplier {
 
 // MARK: - AnySupplier (Details)
 
-fileprivate extension AnySupplier {
+internal extension AnySupplier {
+	@inlinable
 	mutating func mutating() {
 		if isKnownUniquelyReferenced(&self.core) {
 			self.core = self.core.copy()
@@ -49,16 +56,28 @@ fileprivate extension AnySupplier {
 
 // MARK: - Any  Core
 
-fileprivate class AnySupplierCore<Supplied> {
-	fileprivate func copy() -> AnySupplierCore<Supplied> {
+@_fixed_layout
+@usableFromInline
+internal class AnySupplierCore<Supplied> {
+	@inlinable
+	init() { }
+
+	@inlinable
+	deinit { }
+
+	@inlinable
+	internal func copy() -> AnySupplierCore<Supplied> {
 		fatalError()
 	}
 
-	fileprivate var supplied: Supplied {
+	@usableFromInline
+	internal var supplied: Supplied {
+		@inlinable
 		get {
 			fatalError()
 		}
 
+		@inlinable
 		set {
 			fatalError()
 		}
@@ -67,22 +86,33 @@ fileprivate class AnySupplierCore<Supplied> {
 
 // MARK: - SupplierCore
 
-fileprivate final class SupplierCore<Base>: AnySupplierCore<Base.Supplied> where Base: Supplier {
-	fileprivate init(_ base: Base) {
+@_fixed_layout
+@usableFromInline
+internal final class SupplierCore<Base>: AnySupplierCore<Base.Supplied> where Base: Supplier {
+	@inlinable
+	internal init(_ base: Base) {
 		self.base = base
 	}
 
-	private var base: Base
+	@inlinable
+	deinit { }
 
-	fileprivate override func copy() -> AnySupplierCore<Base.Supplied> {
+	@usableFromInline
+	internal var base: Base
+
+	@inlinable
+	internal override func copy() -> AnySupplierCore<Base.Supplied> {
 		return SupplierCore(self.base)
 	}
 
-	fileprivate override var supplied: Base.Supplied {
+	@usableFromInline
+	internal override var supplied: Base.Supplied {
+		@inlinable
 		get {
 			return self.base.supplied
 		}
 
+		@inlinable
 		set {
 			self.base.supplied = newValue
 		}
