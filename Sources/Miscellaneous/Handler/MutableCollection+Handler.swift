@@ -31,10 +31,14 @@ public extension MutableCollection where Element: Handler {
 	typealias Handled = Element.Handled
 
 	@inlinable
-	mutating func handle(_ handled: Handled) {
+	mutating func handle(_ handled: Handled) -> Bool {
+		var isSuccessful = true
 		for index in self.indices {
-			self[index].handle(handled)
+			if !self[index].handle(handled) {
+				isSuccessful = false
+			}
 		}
+		return isSuccessful
 	}
 }
 

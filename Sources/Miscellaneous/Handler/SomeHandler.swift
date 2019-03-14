@@ -34,12 +34,12 @@ public struct SomeHandler<Handled> {
 	///
 	/// - parameter function: The function to be wrapped.
 	@inlinable
-	public init(_ function: @escaping (Handled) -> Void) {
+	public init(_ function: @escaping (Handled) -> Bool) {
 		self.function = function
 	}
 
 	/// The function to be used in order to handle things.
-	public var function: (Handled) -> Void
+	public var function: (Handled) -> Bool
 }
 
 // MARK: - SomeHandler: Handler
@@ -50,7 +50,7 @@ public extension SomeHandler {
 	/* associatedtype Handled */
 
 	@inlinable
-	func handle(_ handled: Handled) {
-		self.function(handled)
+	func handle(_ handled: Handled) -> Bool {
+		return self.function(handled)
 	}
 }

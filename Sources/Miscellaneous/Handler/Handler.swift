@@ -34,5 +34,6 @@ public protocol Handler {
 	/// Handle a thing.
 	///
 	/// - parameter handled: The thing to be handled.
-	mutating func handle(_ handled: Handled)
+	/// - returns: If handling was successful, returns `true`, otherwise returns `false`.
+	mutating func handle(_ handled: Handled) -> Bool
 }

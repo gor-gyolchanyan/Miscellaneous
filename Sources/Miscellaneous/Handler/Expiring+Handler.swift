@@ -31,8 +31,8 @@ public extension Expiring where Unexpired: Handler {
 	typealias Handled = Unexpired.Handled
 
 	@inlinable
-	mutating func handle(_ handled: Handled) {
-		self.unexpired?.handle(handled)
+	mutating func handle(_ handled: Handled) -> Bool {
+		return self.unexpired?.handle(handled) ?? false
 	}
 }
 

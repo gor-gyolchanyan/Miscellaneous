@@ -42,7 +42,7 @@ public extension NoHandler {
 	/* associatedtype Handled */
 
 	@inlinable
-	func handle(_ handled: Handled) {
-		// This is intentionally left blank.
+	func handle(_ handled: Handled) -> Bool {
+		return false
 	}
 }

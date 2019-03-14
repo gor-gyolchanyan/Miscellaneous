@@ -57,9 +57,9 @@ public extension AnyHandler {
 	/* associatedtype Handled */
 
 	@inlinable
-	mutating func handle(_ handled: Handled) {
+	mutating func handle(_ handled: Handled) -> Bool {
 		self.mutating()
-		self.core.handle(handled)
+		return self.core.handle(handled)
 	}
 }
 
@@ -91,7 +91,7 @@ internal class AnyHandlerCore<Handled> {
 	}
 
 	@inlinable
-	internal func handle(_ handled: Handled) {
+	internal func handle(_ handled: Handled) -> Bool {
 		unimplemented()
 	}
 }
@@ -118,7 +118,7 @@ internal final class HandlerCore<Base>: AnyHandlerCore<Base.Handled> where Base:
 	}
 
 	@inlinable
-	internal override func handle(_ handled: Base.Handled) {
-		self.base.handle(handled)
+	internal override func handle(_ handled: Base.Handled) -> Bool {
+		return self.base.handle(handled)
 	}
 }
