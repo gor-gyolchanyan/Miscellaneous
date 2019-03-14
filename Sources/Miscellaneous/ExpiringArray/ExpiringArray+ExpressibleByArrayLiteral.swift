@@ -3,7 +3,7 @@
 extension ExpiringArray: ExpressibleByArrayLiteral where TheExpiring: ExpressibleByNilLiteral { }
 
 public extension ExpiringArray where TheExpiring: ExpressibleByNilLiteral {
-	typealias ArrayLiteralElement = Element
+	typealias ArrayLiteralElement = Unexpired?
 
 	@inlinable
 	init(arrayLiteral elements: ArrayLiteralElement...) {

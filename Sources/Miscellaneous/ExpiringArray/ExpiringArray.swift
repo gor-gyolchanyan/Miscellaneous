@@ -15,7 +15,9 @@ public struct ExpiringArray<TheExpiring> where TheExpiring: Expiring {
 }
 
 public extension ExpiringArray {
-	typealias CompactView = LazyMapCollection<LazyFilterCollection<LazyMapCollection<Array<TheExpiring>, TheExpiring.Unexpired?>>, TheExpiring.Unexpired>
+	typealias Unexpired = TheExpiring.Unexpired
+
+	typealias CompactView = LazyMapCollection<LazyFilterCollection<LazyMapCollection<Array<TheExpiring>, Unexpired?>>, Unexpired>
 
 	@inlinable
 	func compacted() -> CompactView {

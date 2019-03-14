@@ -19,3 +19,5 @@ extension Dictionary.Values: Handler where Element: Handler { }
 extension EmptyCollection: Handler where Element: Handler { }
 extension Slice: Handler where Base: MutableCollection, Base.Element: Handler { }
 extension UnsafeMutableBufferPointer: Handler where Element: Handler { }
+
+extension ExpiringArray: Handler where TheExpiring.Unexpired: Handler { }

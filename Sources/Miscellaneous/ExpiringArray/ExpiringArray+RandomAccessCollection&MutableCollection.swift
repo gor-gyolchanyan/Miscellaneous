@@ -4,7 +4,7 @@ extension ExpiringArray: RandomAccessCollection & MutableCollection { }
 
 public extension ExpiringArray {
 	typealias Index = Int
-	typealias Element = TheExpiring.Unexpired?
+	typealias Element = Unexpired?
 
 	@inlinable
 	var startIndex: Index {
