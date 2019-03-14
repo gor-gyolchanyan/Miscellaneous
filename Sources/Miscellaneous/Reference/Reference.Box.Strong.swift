@@ -1,3 +1,6 @@
+#warning("Enable the following code when migrating to Swift 5.")
+#if false
+
 // MARK: - Reference.Box.Strong
 
 internal extension Reference.Box {
@@ -13,3 +16,5 @@ internal extension Reference.Box {
 		internal var instance: Instance?
 	}
 }
+
+#endif

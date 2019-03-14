@@ -1,3 +1,6 @@
+#warning("Enable the following code when migrating to Swift 5.")
+#if false
+
 // MARK: - Reference.Box
 
 internal extension Reference {
@@ -66,3 +69,5 @@ internal extension Reference.Box {
 		}
 	}
 }
+
+#endif
