@@ -60,12 +60,12 @@ internal class AnyHandlerCore<Handled> {
 
 	@inlinable
 	internal func copy() -> AnyHandlerCore<Handled> {
-		fatalError()
+		unimplemented()
 	}
 
 	@inlinable
 	internal func handle(_ handled: Handled) {
-		fatalError()
+		unimplemented()
 	}
 }
 

@@ -67,19 +67,19 @@ internal class AnyExpiringCore<Unexpired> {
 
 	@inlinable
 	internal func copy() -> AnyExpiringCore<Unexpired> {
-		fatalError()
+		unimplemented()
 	}
 
 	@usableFromInline
 	internal var unexpired: Unexpired? {
 		@inlinable
 		get {
-			fatalError()
+			unimplemented()
 		}
 
 		@inlinable
 		set {
-			fatalError()
+			unimplemented()
 		}
 	}
 }

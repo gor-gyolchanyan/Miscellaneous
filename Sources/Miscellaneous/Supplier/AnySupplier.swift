@@ -67,19 +67,19 @@ internal class AnySupplierCore<Supplied> {
 
 	@inlinable
 	internal func copy() -> AnySupplierCore<Supplied> {
-		fatalError()
+		unimplemented()
 	}
 
 	@usableFromInline
 	internal var supplied: Supplied {
 		@inlinable
 		get {
-			fatalError()
+			unimplemented()
 		}
 
 		@inlinable
 		set {
-			fatalError()
+			unimplemented()
 		}
 	}
 }
