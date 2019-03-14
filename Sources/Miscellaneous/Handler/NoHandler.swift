@@ -2,7 +2,10 @@
 
 /// An implementation of `Handler` that does nothing when handling things.
 @_fixed_layout
-public struct NoHandler<Handled> { }
+public struct NoHandler<Handled> {
+	@inlinable
+	public init() { }
+}
 
 // MARK: - NoHandler: Handler
 
