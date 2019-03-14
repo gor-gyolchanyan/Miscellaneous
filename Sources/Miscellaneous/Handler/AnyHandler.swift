@@ -53,6 +53,12 @@ internal extension AnyHandler {
 @usableFromInline
 internal class AnyHandlerCore<Handled> {
 	@inlinable
+	init() { }
+
+	@inlinable
+	deinit { }
+
+	@inlinable
 	internal func copy() -> AnyHandlerCore<Handled> {
 		fatalError()
 	}
@@ -72,6 +78,9 @@ internal final class HandlerCore<Base>: AnyHandlerCore<Base.Handled> where Base:
 	internal init(_ base: Base) {
 		self.base = base
 	}
+
+	@inlinable
+	deinit { }
 
 	@usableFromInline
 	internal var base: Base
