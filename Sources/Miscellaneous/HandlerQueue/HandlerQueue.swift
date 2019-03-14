@@ -29,9 +29,9 @@
 // MARK: - HandlerQueue
 
 @_fixed_layout
-public struct HandlerQueue<Element> where Element: Handler {
+public struct HandlerQueue<Handled> {
 	@usableFromInline
-	internal typealias Elements = [Element]
+	internal typealias Elements = [AnyHandler<Handled>]
 
 	@inlinable
 	internal init(elements: Elements) {
@@ -49,32 +49,17 @@ public extension HandlerQueue {
 	}
 
 	@inlinable
-	func isEnqueued(where predicate: (Element) throws -> Bool) rethrows -> Bool {
-		return try self.elements.firstIndex(where: predicate) != nil
-	}
-
-	@inlinable
-	mutating func enqueue(_ element: Element) {
+	mutating func enqueue(_ element: AnyHandler<Handled>) {
 		self.elements.append(element)
 	}
 
 	@inlinable
-	mutating func dequeue(where predicate: (Element) throws -> Bool) rethrows -> Element? {
-		guard let elementIndex = try self.elements.firstIndex(where: predicate) else {
-			return nil
-		}
-		return self.elements.remove(at: elementIndex)
-	}
-}
-
-public extension HandlerQueue where Element: Equatable {
-	@inlinable
-	func isEnqueued(_ element: Element) -> Bool {
-		return isEnqueued { $0 == element }
+	mutating func enqueue<Element>(_ element: Element) where Element: Handler, Element.Handled == Handled {
+		self.enqueue(AnyHandler(element))
 	}
 
 	@inlinable
-	mutating func dequeue(_ element: Element) -> Element? {
-		return self.dequeue { $0 == element }
+	mutating func enqueue(_ element: @escaping (Handled) -> Bool) {
+		self.enqueue(SomeHandler(element))
 	}
 }

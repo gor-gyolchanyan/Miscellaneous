@@ -28,14 +28,13 @@
 
 // MARK: - HandlerQueue: Handler
 
-extension HandlerQueue: Handler { }
-
 public extension HandlerQueue {
-	typealias Handled = Element.Handled
+	/* associatedtype Handled */
 
+	@inlinable
 	mutating func handle(_ handled: Handled) -> Bool {
-		for index in self.indices {
-			if self[index].handle(handled) {
+		for elementIndex in self.elements.indices {
+			if self.elements[elementIndex].handle(handled) {
 				return true
 			}
 		}

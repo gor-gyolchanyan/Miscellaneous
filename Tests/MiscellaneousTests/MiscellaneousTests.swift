@@ -29,10 +29,35 @@ import XCTest
 @testable import Miscellaneous
 
 final class MiscellaneousTests: XCTestCase {
-    func testExample() {
-    }
+    func testHandlerQueue() {
+		var output: String?
+
+		var queue = HandlerQueue<String>()
+		queue.enqueue {
+			if $0 == "1" {
+				output = "first"
+				return true
+			}
+			return false
+		}
+		queue.enqueue {
+			if $0 == "2" {
+				output = "second"
+				return true
+			}
+			return false
+		}
+
+		output = nil
+		_ = queue.handle("1")
+		XCTAssertEqual(output, "first")
+
+		output = nil
+		_ = queue.handle("2")
+		XCTAssertEqual(output, "second")
+	}
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testHandlerQueue", testHandlerQueue),
     ]
 }
