@@ -1,6 +1,5 @@
-
-# Created by https://www.gitignore.io/api/macos,linux,swiftpm,windows
-# Edit at https://www.gitignore.io/?templates=macos,linux,swiftpm,windows
+# Created by https:#www.gitignore.io/api/macos,linux,swiftpm,windows
+# Edit at https:#www.gitignore.io/?templates=macos,linux,swiftpm,windows
 
 ### Linux ###
 *~
@@ -77,4 +76,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/macos,linux,swiftpm,windows
+# End of https:#www.gitignore.io/api/macos,linux,swiftpm,windows
