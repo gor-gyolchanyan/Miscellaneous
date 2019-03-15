@@ -55,6 +55,23 @@ final class MiscellaneousTests: XCTestCase {
 		output = nil
 		_ = queue.handle("2")
 		XCTAssertEqual(output, "second")
+
+		queue.pop()
+		queue.push {
+			if $0 == "2" {
+				output = "segundo"
+				return true
+			}
+			return false
+		}
+
+		output = nil
+		_ = queue.handle("1")
+		XCTAssertEqual(output, "first")
+
+		output = nil
+		_ = queue.handle("2")
+		XCTAssertEqual(output, "segundo")
 	}
 
 	func testExample() {
