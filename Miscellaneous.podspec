@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 	spec.name                       = "Miscellaneous"
-	spec.version                    = "0.0.8"
+	spec.version                    = "0.0.9"
 	
 	spec.summary                    = "An assortment of miscellaneous goodies for Swift."
 	spec.description                = <<-DESC
