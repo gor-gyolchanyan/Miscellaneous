@@ -26,9 +26,9 @@
 // For more information, please refer to <http://unlicense.org/>
 //  
 
-// MARK: - HandlerQueue: Handler
+// MARK: - HandlerStack: Handler
 
-public extension HandlerQueue {
+public extension HandlerStack {
 	/* associatedtype Handled */
 
 	@inlinable

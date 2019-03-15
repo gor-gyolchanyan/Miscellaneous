@@ -26,10 +26,10 @@
 // For more information, please refer to <http://unlicense.org/>
 //  
 
-// MARK: - HandlerQueue
+// MARK: - HandlerStack
 
 @_fixed_layout
-public struct HandlerQueue<Handled> {
+public struct HandlerStack<Handled> {
 	@usableFromInline
 	internal typealias Elements = [AnyHandler<Handled>]
 
@@ -42,24 +42,33 @@ public struct HandlerQueue<Handled> {
 	internal var elements: Elements
 }
 
-public extension HandlerQueue {
+// MARK: - HandlerStack (Essentials)
+
+public extension HandlerStack {
 	@inlinable
 	public init() {
 		self.init(elements: .init())
 	}
 
 	@inlinable
-	mutating func enqueue(_ element: AnyHandler<Handled>) {
+	mutating func push(_ element: AnyHandler<Handled>) {
 		self.elements.append(element)
 	}
 
 	@inlinable
-	mutating func enqueue<Element>(_ element: Element) where Element: Handler, Element.Handled == Handled {
-		self.enqueue(AnyHandler(element))
+	mutating func pop() {
+		guard !self.elements.isEmpty else {
+			return
+		}
+		self.elements.removeLast()
 	}
+}
 
+// MARK: - HandlerStack (Convenience)
+
+public extension HandlerStack {
 	@inlinable
-	mutating func enqueue(_ element: @escaping (Handled) -> Bool) {
-		self.enqueue(SomeHandler(element))
+	mutating func push<Element>(_ element: Element) where Element: Handler, Element.Handled == Handled {
+		self.push(AnyHandler(element))
 	}
 }

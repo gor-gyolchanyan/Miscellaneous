@@ -1,4 +1,5 @@
 //
+//
 // This is free and unencumbered software released into the public domain.
 //
 // Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -23,46 +24,11 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 // For more information, please refer to <http://unlicense.org/>
-//
+//  
 
-import XCTest
-@testable import Miscellaneous
-
-final class MiscellaneousTests: XCTestCase {
-    func testHandlerStack() {
-		var output: String?
-
-		var queue = HandlerStack<String>()
-		queue.push {
-			if $0 == "1" {
-				output = "first"
-				return true
-			}
-			return false
-		}
-		queue.push {
-			if $0 == "2" {
-				output = "second"
-				return true
-			}
-			return false
-		}
-
-		output = nil
-		_ = queue.handle("1")
-		XCTAssertEqual(output, "first")
-
-		output = nil
-		_ = queue.handle("2")
-		XCTAssertEqual(output, "second")
+public extension HandlerStack {
+	@inlinable
+	mutating func push(_ element: @escaping (Handled) -> Bool) {
+		self.push(SomeHandler(element))
 	}
-
-	func testExample() {
-
-	}
-
-    static var allTests = [
-        ("testHandlerStack", testHandlerStack),
-		("testExample", testExample)
-    ]
 }
