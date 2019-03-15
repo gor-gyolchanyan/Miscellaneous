@@ -40,7 +40,7 @@ public struct DynamicType {
 	}
 
 	/// The wrapped type.
-	public var value: Any.Type
+	public let value: Any.Type
 
 	@usableFromInline
 	internal let isOfThisType: (Any) -> Bool

@@ -53,8 +53,8 @@ public struct DynamicValue {
 	}
 
 	/// The wrapped value.
-	public var value: Any
+	public let value: Any
 
 	/// The dynamic wrapper of the value's static type.
-	public var staticType: DynamicType
+	public let staticType: DynamicType
 }
