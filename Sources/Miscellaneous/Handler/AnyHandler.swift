@@ -74,7 +74,7 @@ internal extension AnyHandler {
 	}
 }
 
-// MARK: - Any  Core
+// MARK: - AnyHandlerCore
 
 @_fixed_layout
 @usableFromInline
